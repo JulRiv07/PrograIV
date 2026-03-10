@@ -1,3 +1,5 @@
+import xml.etree.ElementTree as ET
+
 class Empleados:
     def __init__(self, nombre, ID, salario, años_experiencia):
         self.nombre = nombre
@@ -48,10 +50,12 @@ class Empleados:
         def mostrar_empleados(self):
             for empleado in self.empleados:
                 print(empleado)
+
         def guardar_empleados(self):
             with open("empleados.txt", "w") as file:
                 for empleado in self.empleados:
                     file.write(f"{empleado.nombre},{empleado.ID},{empleado.salario},{empleado.años_experiencia}\n")
+        
         def cargar_empleados(self):
             try:
                 with open("empleados.txt", "r") as file:
@@ -61,6 +65,174 @@ class Empleados:
                         self.agregar_empleado(empleado)
             except FileNotFoundError:
                 print("No se encontró el archivo.")
+
+class Producto:
+
+    def __init__ (self, nombre: str, id: int, precio: float, cantidadEnInventario: int):
+        self.nombre = nombre
+        self.id = id
+        self.precio = precio
+        self.cantidadEnInventario = cantidadEnInventario
+
+    def disminuir_inventario(self, cantidadEnInventario):
+        if self.cantidadEnInventario >= cantidadEnInventario:
+            self.cantidadEnInventario -= cantidadEnInventario
+            return True
+        else:
+            return False
+
+    def aumentar_inventario(self, cantidadEnInventario):
+        self.cantidadEnInventario += cantidadEnInventario
+
+    def mostrar_informacion(self):
+        print(f"Nombre: {self.nombre}")
+        print(f"ID: {self.id}")
+        print(f"Precio: {self.precio}")
+        print(f"Cantidad en inventario: {self.cantidadEnInventario}")
+
+class Cliente:
+
+    def __init__(self, nombre: str, id: int, saldo: float):
+        self.nombre = nombre
+        self.id = id
+        self.saldo = saldo
+
+    def realizar_compra(self, producto: Producto, cantidad: int):
+        if producto.cantidadEnInventario >= cantidad:
+            if self.saldo >= producto.precio * cantidad:
+                self.saldo -= producto.precio * cantidad
+                producto.disminuir_inventario(cantidad)
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def mostrar_informacion(self):
+        print(f"Nombre: {self.nombre}")
+        print(f"ID: {self.id}")
+        print(f"Saldo: {self.saldo}")
+    
+class Tienda:
+    def __init__(self):
+        self.productos = []
+        self.clientes = []
+    
+    def agregar_producto(self, producto: Producto):
+        self.productos.append(producto) 
+
+    def agregar_cliente(self, cliente: Cliente):
+        self.clientes.append(cliente)
+
+    def realizar_venta(self, id_cliente: int, id_producto: int, cantidad: int): 
+        for cliente in self.clientes:
+            if cliente.id == id_cliente:
+                for producto in self.productos:
+                    if producto.id == id_producto:
+                        if cliente.realizar_compra(producto, cantidad):
+                            return True
+                        else:
+                            return False
+                return False
+        return False    
+
+    def mostrar_productos(self):
+        for producto in self.productos:
+            producto.mostrar_informacion()
+
+    def mostrar_clientes(self):
+        for cliente in self.clientes:
+            cliente.mostrar_informacion()
+
+    def guardar_datos(self, archivo: str):
+        root = ET.Element("tienda")
+        
+        productos_elem = ET.SubElement(root, "productos")
+        for p in self.productos:
+            p_elem = ET.SubElement(productos_elem, "producto")
+            ET.SubElement(p_elem, "nombre").text = p.nombre
+            ET.SubElement(p_elem, "id").text = str(p.id)
+            ET.SubElement(p_elem, "precio").text = str(p.precio)
+            ET.SubElement(p_elem, "cantidadEnInventario").text = str(p.cantidadEnInventario)
+            
+        clientes_elem = ET.SubElement(root, "clientes")
+        for c in self.clientes:
+            c_elem = ET.SubElement(clientes_elem, "cliente")
+            ET.SubElement(c_elem, "nombre").text = c.nombre
+            ET.SubElement(c_elem, "id").text = str(c.id)
+            ET.SubElement(c_elem, "saldo").text = str(c.saldo)
+            
+        tree = ET.ElementTree(root)
+        try:
+            tree.write(archivo, encoding="utf-8", xml_declaration=True)
+            print(f"Datos guardados exitosamente en {archivo}")
+        except Exception as e:
+            print(f"Error al guardar los datos: {e}")
+
+    def cargar_datos(self, archivo: str):
+        try:
+            tree = ET.parse(archivo)
+            root = tree.getroot()
+            
+            self.productos = []
+            productos_elem = root.find("productos")
+            if productos_elem is not None:
+                for p_elem in productos_elem.findall("producto"):
+                    nombre = p_elem.find("nombre").text
+                    id_val = int(p_elem.find("id").text)
+                    precio = float(p_elem.find("precio").text)
+                    cantidad = int(p_elem.find("cantidadEnInventario").text)
+                    self.productos.append(Producto(nombre, id_val, precio, cantidad))
+                    
+            self.clientes = []
+            clientes_elem = root.find("clientes")
+            if clientes_elem is not None:
+                for c_elem in clientes_elem.findall("cliente"):
+                    nombre = c_elem.find("nombre").text
+                    id_val = int(c_elem.find("id").text)
+                    saldo = float(c_elem.find("saldo").text)
+                    self.clientes.append(Cliente(nombre, id_val, saldo))
+            print(f"Datos cargados exitosamente desde {archivo}")
+        except FileNotFoundError:
+            print(f"El archivo {archivo} no existe. No se cargaron datos.")
+        except ET.ParseError:
+            print(f"El archivo {archivo} no tiene un formato XML válido.")
+        except Exception as e:
+            print(f"Ocurrió un error al cargar los datos: {e}")
+
+class Cesar:
+    def __init__(self, k = 0):
+        self.k = k
+        self.alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+        self.alphabetDisplaced = self.alphabet[-self.k:] + self.alphabet[:-self.k]
+
+    def __str__(self):
+        return f"{self.alphabet}\n k = {self.k}\n{self.alphabetDisplaced}"
+    
+    def modifyK(self, k):
+        self.k = k
+        self.alphabetDisplaced = self.alphabet[-self.k:] + self.alphabet[:-self.k]
+
+    def encode(self, text):
+        encryptedText = ""
+        for i in range(len(text)):
+            if text[i] != ' ':
+                encryptedText += self.alphabetDisplaced[self.alphabet.index(text[i])]
+            else:
+                encryptedText += ' '
+
+        return encryptedText
+    
+    def deEncode(self, encryptedText):
+        text = ""
+        for i in range(len(encryptedText)):
+            if encryptedText[i] != ' ':
+                text += self.alphabet[self.alphabetDisplaced.index(encryptedText[i])]
+            else:
+                text += ' '
+
+        return text
+
 
 def menu_empleados():
     gestor = Empleados.GestorEmpleados()
@@ -121,5 +293,112 @@ def menu_empleados():
         else:
             print("Opción inválida.")
 
+def menu_tienda():
+    mi_tienda = Tienda()
+    p1 = Producto("Manzana", 1, 1.5, 50)
+    p2 = Producto("Banana", 2, 0.75, 100)
+    p3 = Producto("Pera", 3, 1.25, 75)
+    c1 = Cliente("Julian", 1094049087, 1000)
+    c2 = Cliente("Juan Jose Galvez", 1092852102, 1250)
+    mi_tienda.agregar_producto(p1)
+    mi_tienda.agregar_producto(p2)
+    mi_tienda.agregar_producto(p3)
+    mi_tienda.agregar_cliente(c1)
+    mi_tienda.agregar_cliente(c2)
+    mi_tienda.realizar_venta(1094049087, 1, 2)
+    mi_tienda.realizar_venta(1092852102, 2, 5)
+    mi_tienda.realizar_venta(1094049087, 3, 3)
+    mi_tienda.realizar_venta(1092852102, 1, 1)
+    mi_tienda.realizar_venta(1094049087, 2, 1)
+    mi_tienda.realizar_venta(1092852102, 3, 2)
+    mi_tienda.mostrar_productos()
+    mi_tienda.mostrar_clientes()
+    mi_tienda.guardar_datos("tienda.xml")
+    mi_tienda.cargar_datos("tienda.xml")    
+    mi_tienda.mostrar_productos()
+    mi_tienda.mostrar_clientes()
+    venta_exitosa = mi_tienda.realizar_venta(1094049087, 1, 2)
+    if venta_exitosa:
+        print("Venta exitosa")
+    else:
+        print("Venta fallida")
+    mi_tienda.mostrar_productos()
+    mi_tienda.mostrar_clientes()
+    mi_tienda.guardar_datos("tienda.xml")
+    mi_tienda.cargar_datos("tienda.xml")
+    mi_tienda.mostrar_productos()
+    mi_tienda.mostrar_clientes()
+    venta_exitosa = mi_tienda.realizar_venta(1094049087, 1, 2)
+    if venta_exitosa:
+        print("Venta exitosa")
+    else:
+        print("Venta fallida")
+    mi_tienda.mostrar_productos()
+    mi_tienda.mostrar_clientes()
 
-menu_empleados()
+    mi_tienda.guardar_datos("tienda.xml")
+    mi_tienda.cargar_datos("tienda.xml")
+    mi_tienda.mostrar_productos()
+
+def ejercicio4():
+    print("Punto 4 del parcial I\n")
+    num = (int(input("Ingrese un numero de 4 cifras: ")))
+
+    firstDigit = num // 1000
+    secondDigit = (num % 1000) // 100
+    thirdDigit = (num % 100) // 10
+    fourthDigit = num % 10
+
+    if firstDigit % fourthDigit == 0:
+        print(f"{firstDigit} SI es multiplo de {fourthDigit}")
+    else:
+        print(f"{firstDigit} NO es multiplo de {fourthDigit}")
+
+    sumSecondThird = secondDigit + thirdDigit
+    print (f"La suma del secondDigit y el tercer numero es: {sumSecondThird}")
+
+def julio_cesar():
+    print("Este es un codigo que con una clase 'Cesar' que recibe un desplazamiento 'k' y usando sus metodos se puede cifrar o decifrar una palabra con la 'k' dada.")
+    
+    encription = Cesar(0)
+    while 1:
+        # print(encription)
+
+        print("\n--- MENÚ ---")
+        print("1. Ingresar desplazamiento")
+        print("2. Encriptar una frase")
+        print("3. Desencriptar una frase")
+        print("4. Salir")
+
+        opcion = int(input("\nSeleccione una opción: "))
+
+        if opcion == 1:
+            encription.modifyK(int(input("\nIngrese el desplazamiento para el cifrado: ")))
+            print(encription)
+        elif opcion == 2:
+            phrase = input("\nIngrese la frase a encriptar: ").lower()
+            encryptedPhrase = encription.encode(phrase)
+            print(f"\nFrase = {phrase}\nEncriptado = {encryptedPhrase}")
+        elif opcion == 3:
+            encryptedPhrase = input("\nIngrese la frase a desencriptar: ").lower()
+            phrase = encription.deEncode(encryptedPhrase)
+            print(f"\nEncriptado = {encryptedPhrase}\nFrase = {phrase}")
+        elif opcion == 4:
+            print("\nSaliendo...")
+            break
+        else:
+            print("Opción no valida, intente de nuevo.")
+
+def main():
+    opc = int(input("Ingrese el numero del ejercicio a ejecutar (2, 3, 4 o 5) o 1 para salir: "))
+    while opc != 1:
+        if opc == 2:
+            menu_empleados()
+        elif opc == 3:
+            menu_tienda()
+        elif opc == 4:
+            julio_cesar()
+        elif opc == 5:
+            ejercicio4()
+        else:
+            print("Opción no valida.")
