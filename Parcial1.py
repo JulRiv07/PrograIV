@@ -85,10 +85,7 @@ class Producto:
         self.cantidadEnInventario += cantidadEnInventario
 
     def mostrar_informacion(self):
-        print(f"Nombre: {self.nombre}")
-        print(f"ID: {self.id}")
-        print(f"Precio: {self.precio}")
-        print(f"Cantidad en inventario: {self.cantidadEnInventario}")
+        print(f"Producto: {self.nombre} | ID: {self.id} | Precio: {self.precio} | Stock: {self.cantidadEnInventario}")
 
 class Cliente:
 
@@ -288,6 +285,7 @@ def menu_empleados():
         elif opcion == "6":
             gestor.guardar_empleados()
             print("Saliendo del sistema...")
+            main()
             break
 
         else:
@@ -295,50 +293,67 @@ def menu_empleados():
 
 def menu_tienda():
     mi_tienda = Tienda()
-    p1 = Producto("Manzana", 1, 1.5, 50)
-    p2 = Producto("Banana", 2, 0.75, 100)
-    p3 = Producto("Pera", 3, 1.25, 75)
-    c1 = Cliente("Julian", 1094049087, 1000)
-    c2 = Cliente("Juan Jose Galvez", 1092852102, 1250)
-    mi_tienda.agregar_producto(p1)
-    mi_tienda.agregar_producto(p2)
-    mi_tienda.agregar_producto(p3)
-    mi_tienda.agregar_cliente(c1)
-    mi_tienda.agregar_cliente(c2)
-    mi_tienda.realizar_venta(1094049087, 1, 2)
-    mi_tienda.realizar_venta(1092852102, 2, 5)
-    mi_tienda.realizar_venta(1094049087, 3, 3)
-    mi_tienda.realizar_venta(1092852102, 1, 1)
-    mi_tienda.realizar_venta(1094049087, 2, 1)
-    mi_tienda.realizar_venta(1092852102, 3, 2)
-    mi_tienda.mostrar_productos()
-    mi_tienda.mostrar_clientes()
-    mi_tienda.guardar_datos("tienda.xml")
-    mi_tienda.cargar_datos("tienda.xml")    
-    mi_tienda.mostrar_productos()
-    mi_tienda.mostrar_clientes()
-    venta_exitosa = mi_tienda.realizar_venta(1094049087, 1, 2)
-    if venta_exitosa:
-        print("Venta exitosa")
-    else:
-        print("Venta fallida")
-    mi_tienda.mostrar_productos()
-    mi_tienda.mostrar_clientes()
-    mi_tienda.guardar_datos("tienda.xml")
-    mi_tienda.cargar_datos("tienda.xml")
-    mi_tienda.mostrar_productos()
-    mi_tienda.mostrar_clientes()
-    venta_exitosa = mi_tienda.realizar_venta(1094049087, 1, 2)
-    if venta_exitosa:
-        print("Venta exitosa")
-    else:
-        print("Venta fallida")
-    mi_tienda.mostrar_productos()
-    mi_tienda.mostrar_clientes()
 
-    mi_tienda.guardar_datos("tienda.xml")
-    mi_tienda.cargar_datos("tienda.xml")
-    mi_tienda.mostrar_productos()
+    while True:
+        print("\nSistema de Gestión de Tienda")
+        print("1. Agregar producto")
+        print("2. Agregar cliente")
+        print("3. Realizar venta")
+        print("4. Mostrar productos")
+        print("5. Mostrar clientes")
+        print("6. Guardar datos en XML")
+        print("7. Cargar datos desde XML")
+        print("8. Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            nombre = input("Nombre del producto: ")
+            id_producto = int(input("ID del producto: "))
+            precio = float(input("Precio: "))
+            cantidad = int(input("Cantidad en inventario: "))
+
+            producto = Producto(nombre, id_producto, precio, cantidad)
+            mi_tienda.agregar_producto(producto)
+            print("Producto agregado correctamente.")
+
+        elif opcion == "2":
+            nombre = input("Nombre del cliente: ")
+            id_cliente = int(input("ID del cliente: "))
+            saldo = float(input("Saldo del cliente: "))
+
+            cliente = Cliente(nombre, id_cliente, saldo)
+            mi_tienda.agregar_cliente(cliente)
+            print("Cliente agregado correctamente.")
+
+        elif opcion == "3":
+            id_cliente = int(input("ID del cliente: "))
+            id_producto = int(input("ID del producto: "))
+            cantidad = int(input("Cantidad a comprar: "))
+            if mi_tienda.realizar_venta(id_cliente, id_producto, cantidad):
+                print("Venta realizada con éxito.")
+            else:
+                print("No se pudo realizar la venta.")
+
+        elif opcion == "4":
+            print("\n--- LISTA DE PRODUCTOS ---")
+            mi_tienda.mostrar_productos()
+
+        elif opcion == "5":
+            print("\n--- LISTA DE CLIENTES ---")
+            mi_tienda.mostrar_clientes()
+
+        elif opcion == "6":
+            mi_tienda.guardar_datos("tienda.xml")
+
+        elif opcion == "7":
+            mi_tienda.cargar_datos("tienda.xml")
+
+        elif opcion == "8":
+            print("Saliendo del sistema...")
+            break
+        else:
+            print("Opción no válida.")
 
 def ejercicio4():
     print("Punto 4 del parcial I\n")
@@ -390,15 +405,20 @@ def julio_cesar():
             print("Opción no valida, intente de nuevo.")
 
 def main():
-    opc = int(input("Ingrese el numero del ejercicio a ejecutar (2, 3, 4 o 5) o 1 para salir: "))
+    opc = int(input("\nIngrese el numero del ejercicio a ejecutar (2, 3, 4 o 5) o 1 para salir: "))
+    
     while opc != 1:
         if opc == 2:
             menu_empleados()
         elif opc == 3:
             menu_tienda()
         elif opc == 4:
-            julio_cesar()
-        elif opc == 5:
             ejercicio4()
+        elif opc == 5:
+            julio_cesar()
         else:
             print("Opción no valida.")
+
+        opc = int(input("\nIngrese el numero del ejercicio a ejecutar (2, 3, 4 o 5) o 1 para salir: "))
+
+main()
