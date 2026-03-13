@@ -370,6 +370,8 @@ def julio_cesar():
             phrase = input("\nIngrese la frase a encriptar: ").lower()
             encryptedPhrase = encription.encode(phrase)
             print(f"\nFrase = {phrase}\nEncriptado = {encryptedPhrase}")
+            with open("julio_cesar.txt", "a") as file:
+                file.write(f"{phrase} - {encryptedPhrase}\n")
         elif opcion == 3:
             encryptedPhrase = input("\nIngrese la frase a desencriptar: ").lower()
             phrase = encription.deEncode(encryptedPhrase)
