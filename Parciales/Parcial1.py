@@ -7,6 +7,7 @@ class Empleados:
         self.ID = ID
         self.salario = salario
         self.años_experiencia = años_experiencia
+
     def calcular_salario(self):
         if self.años_experiencia >= 0 and self.años_experiencia <=2:
             return (self.salario * 0.05) + self.salario
@@ -20,8 +21,10 @@ class Empleados:
 class GestorEmpleados:
     def __init__(self):
         self.empleados = []
+
     def agregar_empleado(self, empleado):
         self.empleados.append(empleado)
+
     def eliminar_empleado(self, ID):
         for empleado in self.empleados:
             if empleado.ID == ID:
@@ -50,6 +53,7 @@ class GestorEmpleados:
     def mostrar_empleados(self):
         for empleado in self.empleados:
             print(empleado)
+            
     def guardar_empleados(self):
         with open("empleados.txt", "w") as file:
             for empleado in self.empleados:
@@ -318,6 +322,7 @@ def menu_tienda():
             break
         else:
             print("Opción no válida.")
+            
 class Cesar:
     def __init__(self, k = 0):
         self.k = k
@@ -383,17 +388,19 @@ def julio_cesar():
             print("Opción no valida, intente de nuevo.")
 
 def ejercicio4():
-    num = (int(input("Ingrese un numero de 4 cifras: ")))
+    num = int(input("Ingrese un numero de 4 cifras: "))
 
     firstDigit = num // 1000
     secondDigit = (num % 1000) // 100
     thirdDigit = (num % 100) // 10
     fourthDigit = num % 10
-
-    if firstDigit % fourthDigit == 0:
-        print(f"{firstDigit} SI es multiplo de {fourthDigit}")
+    if fourthDigit != 0:
+        if firstDigit % fourthDigit == 0:
+            print(f"\n{firstDigit} SI es multiplo de {fourthDigit}")
+        else:
+            print(f"\n{firstDigit} NO es multiplo de {fourthDigit}")
     else:
-        print(f"{firstDigit} NO es multiplo de {fourthDigit}")
+        print(f"El cuarto digito es '{fourthDigit}' entonces no se puede comprobar si el primer digito es multiplo del cuarto digito.\n")
 
     sumSecondThird = secondDigit + thirdDigit
     print (f"La suma del secondDigit y el tercer numero es: {sumSecondThird}")
