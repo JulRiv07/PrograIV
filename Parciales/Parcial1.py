@@ -70,7 +70,7 @@ class GestorEmpleados:
             print("No se encontró el archivo.")
 
 def menu_empleados():
-    gestor = Empleados.GestorEmpleados()
+    gestor = Empleados.GestorEmpleados()<
     gestor.cargar_empleados()
 
     while True:
@@ -80,7 +80,8 @@ def menu_empleados():
         print("3. Buscar empleado por ID")
         print("4. Mostrar empleados")
         print("5. Guardar empleados")
-        print("6. Salir")
+        print("6. Editar")
+        print("7. Salir")
 
         opcion = input("Seleccione una opción: ")
 
@@ -119,8 +120,20 @@ def menu_empleados():
         elif opcion == "5":
             gestor.guardar_empleados()
             print("Empleados guardados en archivo.")
-
         elif opcion == "6":
+            ID = input("Ingrese el ID del empleado a editar: ")
+            nombre = input("Nuevo nombre (dejar vacío si no cambia): ")
+            salario = input("Nuevo salario (dejar vacío si no cambia): ")
+            años = input("Nuevos años de experiencia (dejar vacío si no cambia): ")
+
+            salario = float(salario) if salario else None
+            años = int(años) if años else None
+
+            if gestor.editar_empleado(ID, nombre if nombre else None, salario, años):
+                print("Empleado actualizado correctamente.")
+            else:
+                print("Empleado no encontrado.")
+        elif opcion == "7":
             gestor.guardar_empleados()
             print("Saliendo del sistema...")
             main()
@@ -128,6 +141,7 @@ def menu_empleados():
 
         else:
             print("Opción inválida.")
+
 class Producto:
 
     def __init__ (self, nombre: str, id: int, precio: float, cantidadEnInventario: int):
@@ -323,38 +337,7 @@ def menu_tienda():
         else:
             print("Opción no válida.")
             
-class Cesar:
-    def __init__(self, k = 0):
-        self.k = k
-        self.alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-        self.alphabetDisplaced = self.alphabet[-self.k:] + self.alphabet[:-self.k]
 
-    def __str__(self):
-        return f"{self.alphabet}\n k = {self.k}\n{self.alphabetDisplaced}"
-    
-    def modifyK(self, k):
-        self.k = k
-        self.alphabetDisplaced = self.alphabet[-self.k:] + self.alphabet[:-self.k]
-
-    def encode(self, text):
-        encryptedText = ""
-        for i in range(len(text)):
-            if text[i] != ' ':
-                encryptedText += self.alphabetDisplaced[self.alphabet.index(text[i])]
-            else:
-                encryptedText += ' '
-
-        return encryptedText
-    
-    def deEncode(self, encryptedText):
-        text = ""
-        for i in range(len(encryptedText)):
-            if encryptedText[i] != ' ':
-                text += self.alphabet[self.alphabetDisplaced.index(encryptedText[i])]
-            else:
-                text += ' '
-
-        return text
 
 def julio_cesar():
 
