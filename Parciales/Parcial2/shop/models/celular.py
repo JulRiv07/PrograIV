@@ -6,5 +6,5 @@ class Celular(Producto):
         self.almacenamiento = almacenamiento
         self.camaras = camaras
 
-    def mostrar_info(self):
-        return super().mostrar_info() + f"| Almacenamiento: {self.almacenamiento}GB, Cámaras: {self.camaras}"
+    def mostrarInfo(self):
+        return super().mostrarInfo() + f" | Almacenamiento: {self.almacenamiento}GB, Cámaras: {self.camaras}"

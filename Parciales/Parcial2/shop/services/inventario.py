@@ -1,48 +1,47 @@
-from services.json import guardar, cargar
+from services.json import guardarProductos, cargarProductos
 
 class Inventario:
     def __init__(self):
-        self.productos = {}
-        self.productos = cargar()
+        self.productos = cargarProductos()
 
-    def registrar_producto(self, producto):
-        if producto.get_id() in self.productos:
+    def registrarProducto(self, producto):
+        if producto.getId() in self.productos:
             print("Este producto ya fue registrado.")
             return
 
-        self.productos[producto.get_id()] = producto
-        guardar(self.productos)
+        self.productos[producto.getId()] = producto
+        guardarProductos(self.productos)
         print("Producto registrado exitosamente.")
 
-    def mostrar_inventario(self):
+    def mostrarInventario(self):
         if not self.productos:
             print("El inventario está vacío.")
             return
 
         for producto in self.productos.values():
-            print(producto.mostrar_info())
+            print(producto.mostrarInfo())
 
-    def buscar_producto(self, id):
+    def buscarProducto(self, id):
         return self.productos.get(id, None)
     
-    def rebastecer(self, id, cantidad):
-        producto = self.buscar_producto(id)
+    def reabastecer(self, id, cantidad):
+        producto = self.buscarProducto(id)
         if producto:
-            producto.set_cantidad(producto.get_cantidad() + cantidad)
-            print(f"Producto {producto.get_nombre()} rebastecido. Nueva cantidad: {producto.get_cantidad()}")
-            guardar(self.productos)
+            producto.setCantidad(producto.getCantidad() + cantidad)
+            print(f"Producto {producto.getNombre()} actualizado. Stock: {producto.getCantidad()}")
+            guardarProductos(self.productos)
         else:
             print("Producto no encontrado.")
 
-    def consultar_producto(self, id):
-        producto = self.buscar_producto(id)
+    def consultarProducto(self, id):
+        producto = self.buscarProducto(id)
         if producto:
-            print(producto.mostrar_info())
+            print(producto.mostrarInfo())
         else:
             print("Producto no encontrado.")
 
-    def vender(self, id, cantidad):
-        producto = self.buscar_producto(id)
+    def venderProducto(self, id, cantidad):
+        producto = self.buscarProducto(id)
         if not producto:
             print("Producto no encontrado.")
             return
@@ -51,11 +50,11 @@ class Inventario:
             print("Cantidad inválida.")
             return
 
-        if producto.get_cantidad() < cantidad:
+        if producto.getCantidad() < cantidad:
             print("Stock insuficiente.")
             return
         
-        subtotal = producto.get_precio() * cantidad
+        subtotal = producto.getPrecio() * cantidad
         descuento = 0
 
         if cantidad >= 3:
@@ -65,6 +64,9 @@ class Inventario:
             descuento += subtotal * 0.05
 
         total = subtotal - descuento
-        producto.set_cantidad(producto.get_cantidad() - cantidad)
-        print(f"Venta exitosa. Subtotal: ${subtotal:.2f} (Descuento: ${descuento:.2f}) \n Total: ${total:.2f}")
-        guardar(self.productos)
+
+        producto.setCantidad(producto.getCantidad() - cantidad)
+
+        print(f"Venta exitosa. Subtotal: ${subtotal:.2f} (Descuento: ${descuento:.2f}) \nTotal: ${total:.2f}")
+
+        guardarProductos(self.productos)

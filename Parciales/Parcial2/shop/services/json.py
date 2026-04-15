@@ -3,15 +3,15 @@ from models.computador import Computador
 from models.celular import Celular
 from models.accesorio import Accesorio
 
-def guardar(productos):
+def guardarProductos(productos):
     data = {}
 
     for cod, p in productos.items():
         info = {
             "tipo": p.__class__.__name__,
-            "nombre": p.get_nombre(),
-            "precio": p.get_precio(),
-            "cantidad": p.get_cantidad()
+            "nombre": p.getNombre(),
+            "precio": p.getPrecio(),
+            "cantidad": p.getCantidad()
         }
 
         if info["tipo"] == "Computador":
@@ -23,7 +23,7 @@ def guardar(productos):
             info["camaras"] = p.camaras
 
         elif info["tipo"] == "Accesorio":
-            info["categoria"] = p.categoria
+            info["tipoAccesorio"] = p.tipo   # 🔥 corregido
 
         data[cod] = info
 
@@ -31,7 +31,7 @@ def guardar(productos):
         json.dump(data, f, indent=4)
 
 
-def cargar():
+def cargarProductos():
     try:
         with open("data/inventario.json", "r") as f:
             data = json.load(f)
@@ -67,7 +67,7 @@ def cargar():
                     info["nombre"],
                     info["precio"],
                     info["cantidad"],
-                    info.get("categoria", "")
+                    info.get("tipoAccesorio", "")
                 )
 
             productos[cod] = p

@@ -1,1 +1,10 @@
-{}
+{
+    "123": {
+        "tipo": "Computador",
+        "nombre": "Acer Nitro 5",
+        "precio": 4200000.0,
+        "cantidad": 5,
+        "ram": "8",
+        "procesador": "64"
+    }
+}

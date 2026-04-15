@@ -6,5 +6,5 @@ class Computador(Producto):
         self.ram = ram
         self.procesador = procesador
     
-    def mostrar_info(self):
-        return super().mostrar_info() + f"| RAM: {self.ram}, CPU: {self.procesador}"
+    def mostrarInfo(self):
+        return super().mostrarInfo() + f" | RAM: {self.ram}, CPU: {self.procesador}"

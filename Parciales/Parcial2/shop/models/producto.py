@@ -5,20 +5,20 @@ class Producto:
         self.__precio = precio
         self.__cantidad = cantidad
     
-    def get_id(self):
+    def getId(self):
         return self.__id
     
-    def get_nombre(self):
+    def getNombre(self):
         return self.__nombre
     
-    def get_precio(self):      
+    def getPrecio(self):      
         return self.__precio
     
-    def get_cantidad(self):
+    def getCantidad(self):
         return self.__cantidad
     
-    def set_cantidad(self, cantidad):
+    def setCantidad(self, cantidad):
         self.__cantidad = cantidad
 
-    def mostrar_info(self):
+    def mostrarInfo(self):
         return f"{self.__nombre} - ${self.__precio} - Stock: {self.__cantidad}"
