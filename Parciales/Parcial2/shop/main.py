@@ -94,5 +94,8 @@ while True:
         print("Saliendo...")
         break
 
+    elif opc == "7":
+        inv.categoriaMasVendida()
+
     else:
         print("Opción no válida")
