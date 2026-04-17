@@ -1,7 +1,7 @@
 import json
-from models.computador import Computador
-from models.celular import Celular
-from models.accesorio import Accesorio
+from Parcial2.Punto3.models.computador import Computador
+from Parcial2.Punto3.models.celular import Celular
+from Parcial2.Punto3.models.accesorio import Accesorio
 
 def guardarProductos(productos):
     data = {}
@@ -23,17 +23,17 @@ def guardarProductos(productos):
             info["camaras"] = p.camaras
 
         elif info["tipo"] == "Accesorio":
-            info["tipoAccesorio"] = p.tipo   # 🔥 corregido
+            info["tipoAccesorio"] = p.tipo   
 
         data[cod] = info
 
-    with open("data/inventario.json", "w") as f:
+    with open("Parcial2/Punto3/data/inventario.json", "w") as f:
         json.dump(data, f, indent=4)
 
 
 def cargarProductos():
     try:
-        with open("data/inventario.json", "r") as f:
+        with open("Parcial2/Punto3/data/inventario.json", "r") as f:
             data = json.load(f)
 
         productos = {}

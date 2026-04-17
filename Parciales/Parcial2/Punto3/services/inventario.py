@@ -1,4 +1,4 @@
-from services.json import guardarProductos, cargarProductos
+from Parcial2.Punto3.services.json import guardarProductos, cargarProductos
 
 class Inventario:
     def __init__(self):
@@ -75,12 +75,12 @@ class Inventario:
 
         guardarProductos(self.productos)
 
-    def categoriaMasVendida(self):
-        if not self.ventasPorCategoria:
-            print("No hay ventas registradas.")
-            return
-
-        categoria = max(self.ventasPorCategoria, key=self.ventasPorCategoria.get)
-        cantidad = self.ventasPorCategoria[categoria]
-
-        print(f"Categoría más vendida: {categoria} ({cantidad} unidades)")
+def categoriaMasVendida(Inventario):
+    
+    if not Inventario.ventasPorCategoria:
+        print("No hay ventas registradas.")
+        return
+    
+    categoria = max(Inventario.ventasPorCategoria, key=Inventario.ventasPorCategoria.get)
+    cantidad = Inventario.ventasPorCategoria[categoria]
+    print(f"Categoría más vendida: {categoria} ({cantidad} unidades)")

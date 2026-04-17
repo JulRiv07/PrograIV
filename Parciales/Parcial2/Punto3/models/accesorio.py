@@ -1,4 +1,4 @@
-from models.producto import Producto
+from Parcial2.Punto3.models.producto import Producto
 
 class Accesorio(Producto):
     def __init__(self, id, nombre, precio, cantidad, tipo):
