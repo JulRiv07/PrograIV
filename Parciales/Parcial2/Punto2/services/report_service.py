@@ -1,10 +1,10 @@
-from models import PacienteUrgencia
+from Parcial2.Punto2.models import PacienteUrgencia
 
-def pacienteMasCritico(pacientes: list):
+def pacienteMasCritico(pacientes):
     
     niveles = {"leve": 1, "moderado": 2, "grave": 3, "crítico": 4}
 
-    urgencias = [p for p in pacientes if isinstance(p, PacienteUrgencia)]
+    urgencias = [p for p in pacientes.pacientes if isinstance(p, PacienteUrgencia)]
 
     if not urgencias:
         print("No hay pacientes de urgencias registrados.")

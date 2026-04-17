@@ -1,0 +1,10 @@
+[
+    {
+        "tipo": "PacienteUrgencia",
+        "documento": 123,
+        "nombre": "jul",
+        "edad": 15,
+        "estadoDeAtencion": "Pendiente",
+        "nivelDeGravedad": "muchoo"
+    }
+]

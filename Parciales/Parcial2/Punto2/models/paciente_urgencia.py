@@ -1,4 +1,4 @@
-from models.paciente import Paciente
+from Parcial2.Punto2.models.paciente import Paciente
 
 class PacienteUrgencia(Paciente):
     def __init__(self, documento: int, nombre: str, edad: int, estadoDeAtencion: str, nivelDeGravedad: str):

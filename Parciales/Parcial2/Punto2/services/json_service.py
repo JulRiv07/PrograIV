@@ -1,5 +1,5 @@
 import json
-from models import PacienteGeneral, PacientePrioritario, PacienteUrgencia
+from Parcial2.Punto2.models import PacienteGeneral, PacientePrioritario, PacienteUrgencia
 
 def guardarJSON(pacientes: list, archivo="pacientes.json"):
     datos = []
@@ -37,7 +37,7 @@ def cargarJSON(archivo="pacientes.json") -> list:
                                         d["estadoDeAtencion"], d["condicionEspecial"])
             elif tipo == "PacienteUrgencia":
                 p = PacienteUrgencia(d["documento"], d["nombre"], d["edad"],
-                                     d["estadoDeAtencion"], d["nivelDeGravedad"])
+                                    d["estadoDeAtencion"], d["nivelDeGravedad"])
             pacientes.append(p)
         print(f"Datos cargados desde {archivo}.")
         return pacientes

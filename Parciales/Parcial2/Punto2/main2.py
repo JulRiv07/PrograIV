@@ -1,5 +1,9 @@
-from models import PacienteGeneral, PacientePrioritario, PacienteUrgencia
-from services import guardarJSON, cargarJSON, pacienteMasCritico
+from Parcial2.Punto2.models.paciente_general import PacienteGeneral
+from Parcial2.Punto2.models.paciente_prioritario import PacientePrioritario
+from Parcial2.Punto2.models.paciente_urgencia import PacienteUrgencia
+
+from Parcial2.Punto2.services.json_service import guardarJSON, cargarJSON
+from Parcial2.Punto2.services.report_service import pacienteMasCritico
 
 def menu_reportes(sistema):
     while True:
@@ -84,8 +88,16 @@ def registrar_paciente(sistema):
         condicion = input("Condición especial: ").strip()
         paciente = PacientePrioritario(documento, nombre, edad, "Pendiente", condicion)
     elif tipo == "3" or tipo == "urgencias":
-        gravedad = input("Nivel de gravedad: ").strip()
-        paciente = PacienteUrgencia(documento, nombre, edad, "Pendiente", gravedad)
+        gravedad = int(input("Nivel de gravedad:\n1.Leve\n2.moderado\n3.grave\n4.crítico\nopc: "))
+        gravedad_nivel = {1: "Leve", 2: "Moderado", 3: "Grave", 4: "Crítico"}
+        while gravedad not in gravedad_nivel:            
+            print("Nivel de gravedad inválido. Ingrese un número entre 1 y 4.")
+            try:
+                gravedad = int(input("Nivel de gravedad:\n1.Leve\n2.moderado\n3.grave\n4.crítico\nopc: "))
+            except ValueError:
+                print("Error: el nivel de gravedad debe ser un número entero.")
+                continue
+        paciente = PacienteUrgencia(documento, nombre, edad, "Pendiente", gravedad_nivel[gravedad])
     else:
         print("Tipo inválido.")
         return
@@ -118,7 +130,7 @@ def mostrar_menu():
     print("0. Salir")
     print("=============================")
 
-def main():
+def main2():
     sistema = Sistema()
     while True:
         mostrar_menu()
@@ -141,13 +153,8 @@ def main():
             guardar_json(sistema)
         elif opcion == "6":
             cargar_json(sistema)
-        elif opcion == "7":
-            menu_reportes(sistema)
         elif opcion == "0":
             print("Saliendo del sistema. ¡Hasta luego!")
             break
         else:
             print("Opción inválida. Intente de nuevo.")
-
-if __name__ == "__main__":
-    main()

@@ -1,4 +1,6 @@
-from Parcial2.Punto3.main import *
+from Parcial2.Punto1.main1 import *
+from Parcial2.Punto2.main2 import *
+from Parcial2.Punto3.main3 import *
 
 def MostrarMenu():
     print("\n" + "=" * 54)
@@ -16,16 +18,35 @@ def MostrarMenu():
 
 
 def main():
-
-    inv = Inventario()
+    sistema1 = SistemaAlquiler()
+    sistema2 = Sistema()
+    sistema3 = Inventario()
 
     while True:
         MostrarMenu()
         opcion = input("Seleccione una opción: ").strip()
+
         if opcion == "1":
-            categoriaMasVendida(inv)
-        if opcion == "2":
-            menu(inv)
+            main1()
+
+        elif opcion == "2":
+            main2()
+
+        elif opcion == "3":
+            main3(sistema3)
+
+        elif opcion == "4":
+            sistema1.vehiculoCostoso()
+
+        elif opcion == "5":
+            pacienteMasCritico(sistema2.pacientes)
+
+        elif opcion == "6":
+            categoriaMasVendida(sistema3)
+
+        elif opcion == "0":
+            print("Saliendo del sistema...")
+            break
 
         else:
             print("Opción inválida. Intente nuevamente.")

@@ -3,7 +3,7 @@ from .models.computador import *
 from .models.celular import *
 from .models.accesorio import *
 
-def menu(inv):
+def main3(inv):
     while True:
         print("\n--- Menú Principal ---")
         print("1. Registrar")

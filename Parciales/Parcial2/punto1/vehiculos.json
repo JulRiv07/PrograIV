@@ -1,0 +1,80 @@
+{
+    "automovil": [
+        {
+            "placa": "ABC123",
+            "marca": "Toyota",
+            "modelo": "Corolla",
+            "precioPorDia": 80000,
+            "disponible": true,
+            "numeroPuertas": 4
+        },
+        {
+            "placa": "DEF456",
+            "marca": "Chevrolet",
+            "modelo": "Spark",
+            "precioPorDia": 60000,
+            "disponible": true,
+            "numeroPuertas": 4
+        },
+        {
+            "placa": "GHI789",
+            "marca": "Mazda",
+            "modelo": "CX-5",
+            "precioPorDia": 120000,
+            "disponible": true,
+            "numeroPuertas": 4
+        }
+    ],
+    "motocicleta": [
+        {
+            "placa": "MOT001",
+            "marca": "Honda",
+            "modelo": "CB500F",
+            "precioPorDia": 45000,
+            "disponible": true,
+            "cilindraje": 500
+        },
+        {
+            "placa": "MOT002",
+            "marca": "Yamaha",
+            "modelo": "R3",
+            "precioPorDia": 50000,
+            "disponible": true,
+            "cilindraje": 321
+        },
+        {
+            "placa": "MOT003",
+            "marca": "Suzuki",
+            "modelo": "GSX-S750",
+            "precioPorDia": 55000,
+            "disponible": true,
+            "cilindraje": 750
+        }
+    ],
+    "camion": [
+        {
+            "placa": "CAM001",
+            "marca": "Kenworth",
+            "modelo": "T680",
+            "precioPorDia": 250000,
+            "disponible": true,
+            "capacidadCarga": 20.0
+        },
+        {
+            "placa": "CAM002",
+            "marca": "Freightliner",
+            "modelo": "Cascadia",
+            "precioPorDia": 280000,
+            "disponible": true,
+            "capacidadCarga": 25.0
+        },
+        {
+            "placa": "CAM003",
+            "marca": "Volvo",
+            "modelo": "FH16",
+            "precioPorDia": 310000,
+            "disponible": true,
+            "capacidadCarga": 30.0
+        }
+    ]
+}

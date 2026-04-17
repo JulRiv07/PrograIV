@@ -1,5 +1,5 @@
-from sistemaGestor import *
-from datos import *
+from .sistemaGestor import *
+from .datos import *
 
 def MostrarMenu():
     print("\n" + "=" * 54)
@@ -18,18 +18,18 @@ def MostrarMenu():
     print("  0. Salir")
     print("=" * 54)
 
-def Main():
+def main1():
     sistema = SistemaAlquiler()
 
-    # Esto es para ingresar por primera vez los vehiculos que estan en el archivo 'datos.py'
+    #Esto es para ingresar por primera vez los vehiculos que estan en el archivo 'datos.py'
 
-    # listaVehiculos = []
+    listaVehiculos = []
 
-    # for lista in vehiculos.values():
-    #     listaVehiculos.extend(lista)
+    for lista in vehiculos.values():
+        listaVehiculos.extend(lista)
 
-    # for v in listaVehiculos:
-    #     sistema.agregarVehiculo(v)
+    for v in listaVehiculos:
+        sistema.agregarVehiculo(v)
 
     while True:
         MostrarMenu()
@@ -99,4 +99,3 @@ def Main():
             print("\tOpción no válida. Intenta de nuevo.")
 
 
-Main()

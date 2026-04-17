@@ -1,7 +1,7 @@
 import json
-from vehiculos import *
+from .vehiculos import *
 
-direccionArchivo = r"Parcial2\Punto1\files\vehiculos.json"
+direccionArchivo = r"Parcial2/Punto1/vehiculos.json"
 
 class SistemaAlquiler:
     def __init__(self):
