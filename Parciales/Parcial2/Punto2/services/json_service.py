@@ -1,7 +1,7 @@
 import json
 from Parcial2.Punto2.models import PacienteGeneral, PacientePrioritario, PacienteUrgencia
 
-def guardarJSON(pacientes: list, archivo="pacientes.json"):
+def guardarJSON(pacientes: list, archivo="Parcial2/Punto2/data/pacientes.json"):
     datos = []
     for p in pacientes:
         base = {
@@ -22,7 +22,7 @@ def guardarJSON(pacientes: list, archivo="pacientes.json"):
         json.dump(datos, f, ensure_ascii=False, indent=4)
     print(f"Datos guardados en {archivo}.")
 
-def cargarJSON(archivo="pacientes.json") -> list:
+def cargarJSON(archivo="Parcial2/Punto2/data/pacientes.json") -> list:
     try:
         with open(archivo, "r", encoding="utf-8") as f:
             datos = json.load(f)

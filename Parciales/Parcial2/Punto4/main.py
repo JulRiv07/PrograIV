@@ -39,7 +39,7 @@ def main():
             sistema1.vehiculoCostoso()
 
         elif opcion == "5":
-            pacienteMasCritico(sistema2.pacientes)
+            menu_reportes()
 
         elif opcion == "6":
             categoriaMasVendida(sistema3)
